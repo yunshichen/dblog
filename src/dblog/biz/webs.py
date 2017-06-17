@@ -133,7 +133,8 @@ class DBackHandler(tornado.web.RequestHandler):
     def is_avoid_url(self):
         request_uri = self.request.uri
         # print '---- request_uri: ' + request_uri
-        if request_uri.startswith('/front'):
+        # 前台访问和文件访问的时候.
+        if request_uri.startswith('/front') or request_uri.startswith('/upload'):
             return True
 
         return request_uri in ['/', '/admin/login', '/admin/ajax/login', '/admin/logout']

@@ -73,14 +73,14 @@ function init_ck_editor(){
 
     CKEDITOR.config.mathJaxLib = '//cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS_HTML';
     CKEDITOR.config.extraPlugins = 'uploadimage';
-    CKEDITOR.config.imageUploadUrl = '/ajax/ckeditor/upload_image';
+    CKEDITOR.config.imageUploadUrl = '/admin/ajax/ckeditor/upload_image';
 //    CKEDITOR.config.height = '600px';
 //    CKEDITOR.config.width = '800px';
     CKEDITOR.config.height = '85vh';
 
 	// file browser 方式上传的配置
 	CKEDITOR.config.image_previewText = '';
-	CKEDITOR.config.filebrowserUploadUrl= '/ajax/ckeditor/upload_image';
+	CKEDITOR.config.filebrowserUploadUrl= '/admin/ajax/ckeditor/upload_image';
 
 
     CKEDITOR.on('instanceReady', function(e) {

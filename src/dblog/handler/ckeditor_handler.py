@@ -6,7 +6,8 @@
 
 from dblog.biz.webs import DBackHandler
 import logging
-from globals import g_upload_service, g_file_server
+from globals import g_upload_service, g_file_server, g_project_root
+import os
 
 """
 CKEditor 有两种上传图片的方式, 一种使用控件, 另一种使用 copy & paste 的方式. (为什么两种不同, 问设计者吧... )
@@ -76,3 +77,16 @@ class UploadImage(DBackHandler):
         result += "</script>"
 
         self.write(result)
+
+
+class ReadUpload(DBackHandler):
+
+    def get(self, *args):
+
+        uri = self.request.uri
+        uri = uri[1:]           # 去掉第一个 /
+        path = os.path.join(g_project_root, uri)
+        logging.debug('--- file path: ' + path)
+        f, ext = os.path.splitext(uri)
+        self.set_header('Content-Type', 'image/' + ext)
+        self.write(bytes(open(path).read()))

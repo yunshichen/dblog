@@ -44,6 +44,7 @@ urls = [
     #
     # -------- 上传下载
     (r"/admin/ajax/ckeditor/upload_image", ckeditor_handler.UploadImage),
+    (r"/upload/(.*)", ckeditor_handler.ReadUpload),
     #
     # # -------- 前台模板
     (r"/temp/front/v1/index", front_handler.FrontIndex),

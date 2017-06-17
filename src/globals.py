@@ -62,10 +62,9 @@ water_mark = g_config_parser.get('upload', 'water_mark')
 water_mark = os.path.join(g_project_root, water_mark)
 logging.debug('---- water_path: ' + water_mark)
 
-# ---- 上传文件处理类
+# ---- 上传文件处理类, 文件会放到根目录的upload目录下.
 from dblog.biz.image_utils import FileUploadService
-
-upload_save_dir = g_config_parser.get('upload', 'save_dir')
+upload_save_dir = os.path.join(g_project_root, 'upload')
 g_upload_service = FileUploadService(upload_save_dir, water_mark)
 
 # ---- 文件服务器前缀
