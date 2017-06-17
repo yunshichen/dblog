@@ -1,0 +1,33 @@
+{% extends "front_base_v1.html" %}
+
+{% block page_content %}
+
+{% for article_dto in page_holder.data_list %}
+<article id="post-{{article_dto.id}}">
+
+    <div class="blog-item-wrap">
+
+        <div class="post-inner-content">
+            <header class="entry-header page-header">
+
+                <h2 class="entry-title"><a
+                        href="/front/article/detail?id={{article_dto.id}}" target='_blank'
+                        rel="bookmark">{{article_dto.title}}</a></h2>
+
+                <div class="entry-meta">
+                    <span class="cat-links"><i class="fa fa-folder-open-o"></i>
+                        <a href="#">{{article_dto.cat_label}}</a></span>
+
+                    <span class="posted-on"><i class="fa fa-calendar"></i>{{article_dto.create_time}}</span>
+                </div><!-- .entry-meta -->
+            </header><!-- .entry-header -->
+
+            <div class="entry-content">
+                {{article_dto.short_desc }}
+            </div><!-- .entry-content -->
+        </div>
+    </div>
+</article><!-- #post-## -->
+{% end %}
+
+{% end %}

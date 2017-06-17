@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<menu>
+    <header label="博客后台" index="1">
+
+        <parent label="博客管理" index="110" icon="icon-cogs">
+            <sub label="文章管理" link="/admin/article/index" index="111"/>
+            <sub label="分类管理" link="/admin/cat/index" index="112"/>
+        </parent>
+
+    </header>
+
+    <role_def>
+        <role index='r1000' label="管理员">
+            <ref_header index="1" ref_menu="110,111,112"/>
+        </role>
+    </role_def>
+</menu>
+
+

@@ -1,0 +1,37 @@
+<!-- 循环菜单 begin -->
+{% for menu in CURRENT_LEFT_MENUS %}
+
+<!-- 判断当前父菜单是否打开 -->
+{% if menu.index == SELECTED_LEFT_PARENT.index %}
+<li class="active open">
+    <a href="javascript:;">
+        <i class="{{menu.icon}}"></i>
+        <span class="title">{{menu.label}}</span>
+        <span class="selected"></span>
+        <span class="arrow open"></span>
+    </a>
+    <ul class="sub-menu" style="display:block;">
+        {% else %}
+        <li>
+            <a href="javascript:;">
+                <i class="{{menu.icon}}"></i>
+                <span class="title">{{menu.label}}</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu" style="display:none;">
+                {% end %}
+
+                <!-- 判断2级菜单是否选中 -->
+                {% for sub_menu in menu.sub_menus %}
+                {% if sub_menu.index == SELECTED_LEFT_CHILD.index %}
+                <li class="active">
+                    {% else %}
+                <li>
+                    {% end %}
+                    <a onclick="global_click_left('{{menu.index}}','{{sub_menu.index}}','{{sub_menu.link}}')"
+                       href="#">{{sub_menu.label}}</a></li>
+                {% end %}
+            </ul>
+
+            {% end %}
+            <!-- 循环菜单 end-->

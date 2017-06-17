@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{{title_str}}</title>
+
+    <!-- ====== 所需要的全局css begin -->
+    <link href="/static/libs/metronic/media/css/bootstrap.min.css" rel="stylesheet">
+    <!-- ====== 所需要的全局css end -->
+
+    <style>
+        .article_info_cls {
+            width: 100%;
+            margin-top:50px;
+        }
+        .article_info_cls .td_label {
+
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+<input type="hidden" name="aid" id="aid" value="{{article_dto.id}}"/>
+
+<div style="width:100%;">
+
+    <div id="panel_left" style="width: 10%;float: left;">
+        <!-- 左侧用于留白 -->
+        &nbsp;
+    </div>
+
+    <div id="panel_center" style="width: 60%; float: left; ">
+        <!-- 中间文章内容 -->
+        <textarea name="article_content"></textarea>
+    </div>
+
+    <div id="panel_right" style="width: 30%; float: left; ">
+        <!-- 右侧文章信息 -->
+        <table id='article_info_table' class="article_info_cls">
+            <tr>
+                <td width="15%"><span style="margin-left:20px;">标题</span></td>
+                <td width="85%"><input name="title" id="title" value="{{article_dto.title}}" class="m-wrap"
+                                       style="width:95%; margin-top:10px;" type="text"></td>
+            </tr>
+            <tr>
+                <td width="15%">&nbsp;</td>
+                <td width="85%">
+                    <select id="cat_id" name="cat_id" style="width:150px; height: 30px; margin-top:5px;">
+                        <option value="">--------分类------</option>
+                        {% for dto in cat_list %}
+                        {% if dto.id == article_dto.cat_id %}
+                        <option value="{{dto.id}}" selected="selected">{{dto.label}}</option>
+
+                        {% else %}
+                        <option value="{{dto.id}}">{{dto.label}}</option>
+                        {% end %}
+                        {% end %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%"><span style="margin-left:20px;">简介</span></td>
+                <td width="85%">
+                        <textarea rows="10" style="width:95%" name="short_desc" id="short_desc"
+                                  placeholder="简介">{{article_dto.short_desc}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%"><span style="margin-left:20px;">公开</span></td>
+                <td width="85%">
+
+                    <select id="status" name="status" style="width:180px; height: 30px; margin-top:5px;">
+                        {% if article_dto.status == 'Y' %}
+                        <option value="N">草稿</option>
+                        <option value="Y" selected="selected">公开</option>
+                        {% else %}
+                        <option value="N" selected="selected">草稿</option>
+                        <option value="Y">公开</option>
+                        {% end %}
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">&nbsp;</td>
+                <td width="85%">
+                    <button type="button" id="save_record_btn" class="btn btn-success">保存文章</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" id="preview_btn" class="btn btn-success">预览文章</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" id="close_record_btn" class="btn btn-danger">关闭</button>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">&nbsp;</td>
+                <td width="85%">
+                    <span id="show_save_article_info"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+<script src="/static/libs/metronic/media/js/jquery-1.10.1.min.js"></script>
+<script src="/static/libs/metronic/media/js/bootstrap.min.js"></script>
+<script src="/static/libs/metronic/media/js/jquery.gritter.js"></script>
+<script src="/static/libs/juicer.js"></script>
+<!-- ckeditor -->
+<script src="/static/libs/ckeditor-4.6.2/ckeditor.js"></script>
+
+<!-- diego libs -->
+<script src="/static/js/diego-utils.max.js"></script>
+<script src="/static/js/detail/article_detail.max.js"></script>
+
+</html>

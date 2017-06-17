@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Metronic | Layouts - Horzontal & Sidebar Menu</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- ====== 所需要的全局css begin -->
+    <link href="/static/libs/metronic/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+    <link href="/static/libs/metronic/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/libs/metronic/media/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+    <!-- ====== 所需要的全局css end -->
+
+    <link rel="shortcut icon" href="/static/libs/metronic/media/image/favicon.ico"/>
+
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<!-- 隐藏form, 用于改变菜单和界面 -->
+
+
+<body class="page-header-fixed">
+
+<!-- BEGIN HEADER -->
+
+<div class="header navbar navbar-inverse navbar-fixed-top">
+
+    <!-- BEGIN TOP NAVIGATION BAR -->
+
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <!-- BEGIN LOGO -->
+            <a class="brand" href="index.html">
+
+            </a>
+            <!-- END LOGO -->
+            <!-- BEGIN HORIZANTAL MENU -->
+            <div class="navbar hor-menu hidden-phone hidden-tablet">
+                <div class="navbar-inner">
+                    <ul class="nav">
+
+                        <!-- 循环菜单 头部菜单 -->
+                        {% for header in USER_HEADERS %}
+                        {% if header.index == SELECTED_HEADER.index %}
+                        <li class="active" id="global_header_{{header.index}}">
+                            <a href='#'
+                               onclick="javascript:global_click_header('{{header.index}}')">
+                                {{header.label}}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li id="global_header_{{header.index}}">
+                            <a href='#'
+                               onclick="javascript:global_click_header('{{header.index}}')">
+                                {{header.label}}</a>
+                        </li>
+                        {% end %}
+                        {% end %}
+
+                    </ul>
+                </div>
+            </div>
+            <!-- END HORIZANTAL MENU -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <ul class="nav pull-right">
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <li class="dropdown user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img alt="" src="/static/libs/metronic/media/image/avatar1_small.jpg">
+                        <span class="username">云师兄</span>
+                        <i class="icon-angle-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="extra_profile.html"><i class="icon-user"></i> 我的主页</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/logout"><i class="icon-key"></i>退出登录</a></li>
+                    </ul>
+                </li>
+                <!-- END USER LOGIN DROPDOWN -->
+            </ul>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+    </div>
+
+    <!-- END TOP NAVIGATION BAR -->
+
+</div>
+
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN HORIZONTAL MENU PAGE SIDEBAR1 -->
+    <div class="page-sidebar nav-collapse collapse">
+        <ul class="page-sidebar-menu hidden-phone hidden-tablet">
+            <li>
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                <div class="sidebar-toggler hidden-phone"></div>
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            </li>
+
+            {% include 'left.html' %}
+
+        </ul>
+    </div>
+
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+
+        <!-- login modal form begin -->
+        <div id="global_modal_login_div" class="modal hide">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"></button>
+                <h3>登录</h3>
+            </div>
+
+            <div class="modal-body">
+                <font color='red'>您的登录已经超时,请再次登录</font> <br/>
+                <br/>
+                <form id='global_modal_login_form' novalidate="novalidate" class="form-vertical login-form"
+                      method="post" action="/admin/ajax/login">
+                    <input type="hidden" name="from_global_modal" value="Y"/>
+                    <div class="control-group">
+                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                        <label class="control-label visible-ie8 visible-ie9">帐号</label>
+
+                        <div class="controls">
+                            <div class="input-icon left">
+                                <i class="icon-user"></i> <input
+                                    class="m-wrap placeholder-no-fix valid" placeholder="请输入账号"
+                                    name="global_login_account_text" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+
+                        <label class="control-label visible-ie8 visible-ie9">密码</label>
+                        <div class="controls">
+
+                            <div class="input-icon left">
+
+                                <i class="icon-lock"></i> <input
+                                    class="m-wrap placeholder-no-fix" placeholder="请输入密码"
+                                    name="global_login_password" type="password">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span id='show_login_error_in_modal'></span>
+                <input class="btn red" value="提交" type="button" onclick="global_do_submit_modal_login_form();">
+                <input class="btn grey" value="关闭" type="button" id="close_login_modal" data-dismiss="modal">
+            </div>
+        </div>
+
+        <!-- login modal form end -->
+
+
+        <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+        <div id="portlet-config" class="modal hide">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"></button>
+                <h3>portlet Settings</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>Here will be a configuration form</p>
+            </div>
+        </div>
+
+        <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+        <!-- BEGIN PAGE CONTAINER-->
+
+        <div class="container-fluid">
+
+            <!-- BEGIN PAGE HEADER-->
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN STYLE CUSTOMIZER -->
+                    <!-- END BEGIN STYLE CUSTOMIZER -->
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home"></i>
+                            <a href="index.html">{{SELECTED_LEFT_PARENT.label}}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li>
+                            <a href="#">{{SELECTED_LEFT_CHILD.label}}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+
+            </div>
+
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN PAGE CONTENT-->
+
+            <div class="row-fluid">
+
+                {% block page_content %}{% end %}
+
+            </div>
+
+            <!-- END PAGE CONTENT-->
+
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+
+<div class="footer">
+    <div class="footer-inner">
+        2017 © WebFuture by Diego
+    </div>
+    <div class="footer-tools">
+			<span class="go-top">
+			<i class="icon-angle-up"></i>
+			</span>
+    </div>
+</div>
+
+<!-- END FOOTER -->
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+
+<!-- BEGIN CORE PLUGINS -->
+<script src="/static/libs/metronic/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+<script src="/static/libs/metronic/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/libs/metronic/media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+<script src="/static/libs/metronic/media/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/libs/metronic/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/libs/metronic/media/js/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/libs/metronic/media/js/jquery.cookie.min.js" type="text/javascript"></script>
+<script src="/static/libs/metronic/media/js/jquery.uniform.min.js" type="text/javascript"></script>
+
+<script src="/static/libs/metronic/media/js/jquery.gritter.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+
+<script src="/static/libs/metronic/media/js/app.js"></script>
+<script src="/static/js/diego-utils.max.js"></script>
+
+<script>
+
+		jQuery(document).ready(function() {    
+
+		   App.init();
+
+		   // 头部菜单选择
+
+		});
+
+
+</script>
+
+<!-- END JAVASCRIPTS -->
+
+{% block page_script %}{% end %}
+<!-- END BODY -->
+
+</body>
+
+</html>

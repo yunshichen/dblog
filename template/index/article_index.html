@@ -1,0 +1,80 @@
+{% extends "../layout/base.html" %}
+{% block page_content %}
+<div class="row-fluid">
+
+    <div class="clearfix">
+
+        <select id="cat_select" name="cat_select" style="width:200px; height: 28px;">
+            <option value="" selected="selected">----所有分类----</option>
+            {% for dto in cat_list %}
+            <option value="{{dto.id}}">{{dto.label}}</option>
+            {% end %}
+        </select>
+
+    </div>
+
+    <div class="clearfix">
+        <a id="go_add_new_article" class="btn green" href="javascript:void(0);">
+            <i class="icon-plus"></i>&nbsp;新增文章</a>
+    </div>
+
+    <div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+        <table aria-describedby="sample_1_info"
+               class="table table-striped table-bordered table-hover dataTable"
+               id="sample_1">
+
+            <thead>
+
+            <tr role="row">
+
+                <th style="width: 100px;" colspan="1"
+                    rowspan="1" role="columnheader"
+                    class="hidden-480 sorting_disabled">标题
+                </th>
+
+                <th style="width: 50px;" colspan="1"
+                    rowspan="1" role="columnheader"
+                    class="hidden-480 sorting_disabled">分类
+                </th>
+
+                <th style="width: 50px;" colspan="1"
+                    rowspan="1" role="columnheader"
+                    class="hidden-480 sorting_disabled">状态
+                </th>
+
+                <th style="width: 50px;" colspan="1"
+                    rowspan="1" role="columnheader"
+                    class="hidden-480 sorting_disabled">创建日期
+                </th>
+
+                <th style="width: 259px;" colspan="1" rowspan="1"
+                    role="columnheader" class="sorting_disabled">操作
+                </th>
+            </tr>
+
+            </thead>
+
+            <tbody aria-relevant="all" aria-live="polite" role="alert" id='table_body'>
+
+            </tbody>
+        </table>
+
+
+        <script type="text/javascript" src="/static/js/dpager.max.js"></script>
+        <div class="row-fluid" id="page_div">
+
+        </div>
+    </div>
+
+</div>
+
+{% end %}
+
+{% block page_script %}
+<script>
+		var g_page;		// 文章分页框
+
+</script>
+<script type="text/javascript" src="/static/js/dpager.max.js"></script>
+<script type="text/javascript" src="/static/js/index/article_index.max.js"></script>
+{% end %}
