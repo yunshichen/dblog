@@ -18,4 +18,4 @@ def create_admin(account_text, pwd):
 
 
 if __name__ == "__main__":
-    create_admin('sa_diego', '123456')
+    create_admin('hello_dblog', '123456')
