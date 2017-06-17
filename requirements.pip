@@ -1,3 +1,2 @@
 tornado==4.4.2
-pysqlite==2.6.3
 peewee==2.9.2
