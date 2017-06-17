@@ -6,7 +6,6 @@ import logging
 import tornado.web
 from globals import g_role
 from dblog.biz.beans import *
-from dblog.biz import image_utils
 
 
 class DJsonEncoder(json.JSONEncoder):
@@ -133,7 +132,7 @@ class DBackHandler(tornado.web.RequestHandler):
     def is_avoid_url(self):
         request_uri = self.request.uri
         # print '---- request_uri: ' + request_uri
-        # 前台访问和文件访问的时候.
+
         if request_uri.startswith('/front') or request_uri.startswith('/upload'):
             return True
 
@@ -326,7 +325,10 @@ class DBackHandler(tornado.web.RequestHandler):
         if len(file_data) > limit_m * 1024 * 1024:
             raise LogicException(u'图片不能大于%dM' % limit_m)
 
-        return file_data
+        # -- 文件后缀名
+        ext = a_file['content_type'].split('/')[1]
+
+        return file_data, ext
 
         # def write_error(self, status_code, **kwargs):
         #     logging.error('++++++++++++++++++ error ssss +++++++++++++++++')

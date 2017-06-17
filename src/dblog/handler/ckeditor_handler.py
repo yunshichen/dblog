@@ -5,6 +5,7 @@
 """
 
 from dblog.biz.webs import DBackHandler
+from dblog.biz.beans import LogicException
 import logging
 from globals import g_upload_service, g_file_server, g_project_root
 import os
@@ -42,8 +43,8 @@ class UploadImage(DBackHandler):
         succ = 1
         fail = 0
         try:
-            file_data = self._get_upload_file_info('upload', LIMIT_M)
-            upload_dto = g_upload_service.do_save(file_data)
+            file_data, ext = self._get_upload_file_info('upload', LIMIT_M)
+            upload_dto = g_upload_service.do_save(file_data, ext)
             full_path = g_file_server + '/' + upload_dto.rel_path
             logging.debug('----- full_path: ' + full_path)
             result = {
@@ -67,8 +68,8 @@ class UploadImage(DBackHandler):
         使用 file browser 上传
         :return:
         """
-        file_data = self._get_upload_file_info('upload', LIMIT_M)
-        upload_dto = g_upload_service.do_save(file_data)
+        file_data, ext = self._get_upload_file_info('upload', LIMIT_M)
+        upload_dto = g_upload_service.do_save(file_data, ext)
         full_path = g_file_server + '/' + upload_dto.rel_path
         logging.debug('----- full_path: ' + full_path)
 

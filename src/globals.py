@@ -57,15 +57,10 @@ from dblog.biz.modals import SimpleBackRoleService
 g_role = SimpleBackRoleService(xml_path)
 logging.info(u'---- 菜单权限初始化完成')
 
-# ---- 水印图片
-water_mark = g_config_parser.get('upload', 'water_mark')
-water_mark = os.path.join(g_project_root, water_mark)
-logging.debug('---- water_path: ' + water_mark)
-
 # ---- 上传文件处理类, 文件会放到根目录的upload目录下.
-from dblog.biz.image_utils import FileUploadService
+from dblog.biz.modals import FileUploadService
 upload_save_dir = os.path.join(g_project_root, 'upload')
-g_upload_service = FileUploadService(upload_save_dir, water_mark)
+g_upload_service = FileUploadService(upload_save_dir)
 
 # ---- 文件服务器前缀
 g_file_server = g_config_parser.get('upload', 'file_server')

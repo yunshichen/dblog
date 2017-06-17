@@ -451,6 +451,43 @@ class BaseCRUDOrderService(BaseCRUDService):
             order_value += 1
 
 
+class FileUploadService(object):
+    def __init__(self, base_dir):
+        self.base_dir = base_dir
+        # 检查 upload的目录是否存在, 如果不存在则创建.
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+
+    def do_save(self, file_data, ext):
+
+        # 构造 upload/2017/12/xxssdfjsfdj-sdfjsdfksfj-sfskdfj.jpg 的文件格式
+        now_time = datetime.now()
+        year = utils.f_time(now_time, '%Y')
+        month = utils.f_time(now_time, '%m')
+        path = os.path.join(self.base_dir, year)
+        path = os.path.join(path, month)
+
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        from uuid import uuid4
+        file_name = str(uuid4()) + '.' + ext
+        path = os.path.join(path, file_name)
+        f = open(path, 'wb')
+        f.write(file_data)
+        f.close()
+
+        rel_path = str(year) + '/' + str(month) + '/' + file_name
+
+        map_data = dict()
+        map_data['rel_path'] = rel_path
+        map_data['file_name'] = file_name
+
+        file_dto = dict_to_bean(map_data)
+
+        return file_dto
+
+
 class TemplateMaker(object):
     """
     用于加载tornado的模板, 通过传入参数生成新的内容, 这个工具很方便用于网站的静态化.
